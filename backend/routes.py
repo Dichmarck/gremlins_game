@@ -1,28 +1,75 @@
-from fastapi import APIRouter
+import datetime
+import uuid
+from fastapi import Form, Request, Response, Depends, HTTPException, APIRouter
 from schemas import StartGameSettings
-import requests
-import config
+from sqlalchemy.orm import Session
+from fastapi import Depends
+from fastapi.responses import HTMLResponse
+from database.database import get_database_session
+from database.models import Questions, Games
 import random
-import json
+from fastapi.templating import Jinja2Templates
 
 
+templates = Jinja2Templates(directory="templates")
 router = APIRouter()
 
-@router.post("/api/new_game")
-async def launch_new_game(game_settings: StartGameSettings):
-    return game_settings
+
+@router.post("/api/create_game")
+async def create_game(player_1_name: str = Form(), player_2_name: str = Form(), questions_count: int = Form(),
+                      difficulty: int = Form(), db: Session = Depends(get_database_session)):
+    game_uuid = uuid.uuid4()
+    new_game = Games(uuid=game_uuid, player_1_name=player_1_name, player_1_score=0,
+                     player_2_name=player_2_name, player_2_score=0,
+                     questions_count=questions_count, difficulty=difficulty,
+                     questions_past="", created_at=datetime.datetime.utcnow(), is_finished=False)
+    db.add(new_game)
+    db.commit()
+    db.refresh(new_game)
+    return {"uuid": game_uuid}
+
+
+@router.get("/api/get_game")
+async def get_game(uuid: str, db: Session = Depends(get_database_session)):
+    return db.query(Games).filter_by(uuid=uuid).one_or_none()
 
 
 @router.get("/api/get_question")
-async def get_question(difficulty: int):
-    params = {"qType": difficulty, "count": 1, "apikey": config.API_KEY}
-    outer_api_response = requests.get(url=config.OUTER_API_URL, params=params).json()['data'][0]
+async def get_question(difficulty: int, exclude: str = "", db: Session = Depends(get_database_session)):
+    exclude = exclude.strip().split(" ")
+    validated_exclude = []
+    for e in exclude:
+        try:
+            validated_exclude.append(int(e))
+        except Exception:
+            pass
+    print(f"Exclude: {validated_exclude}")
+    questions = db.query(Questions).filter_by(difficulty=difficulty).filter(Questions.id.not_in(validated_exclude)).all()
+    return random.choice(questions)
 
-    question = outer_api_response['question']
-    right_answer = outer_api_response['answers'][0]
-    answers = outer_api_response['answers']
-    random.shuffle(answers)
 
-    return {"question": question,
-            "right_answer": right_answer,
-            "answers": answers}
+@router.post("/api/change_player_score")
+async def change_player_score(uuid: str, player: int, scores_to_add: int, db: Session = Depends(get_database_session)):
+    game = db.query(Games).filter_by(uuid=uuid).one_or_none()
+    if not game:
+        return {"Error": f"game with {uuid} not found"}
+    else:
+        if scores_to_add not in [-1, 0, 1]:
+            return {"Error": f"scores_to_add value should be -1, 0 or 1"}
+
+        if player == 1:
+            game.player_1_score += scores_to_add
+            db.commit()
+        elif player == 2:
+            game.player_2_score += scores_to_add
+            db.commit()
+        else:
+            return {"Error": f"player value should be 1 or 2"}
+
+        return db.query(Games).filter_by(uuid=uuid).one_or_none()
+
+
+
+@router.get("/")
+async def show_creete_game_form(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
