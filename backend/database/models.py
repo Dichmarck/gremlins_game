@@ -31,6 +31,7 @@ class Games(Base):
     player_2_score = Column(SmallInteger)
     questions_count = Column(SmallInteger)
     difficulty = Column(SmallInteger)
+    current_question = Column(SmallInteger)
     questions_past = Column(String(255), default="")
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     is_finished = Column(Boolean, default=False)

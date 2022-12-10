@@ -1,0 +1,68 @@
+<html>
+<head>
+  <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <title>Веб-викторина</title>
+</head>
+<body>
+  <div class="outer">
+    <div class="inner shadow p-3 rounded">
+      <form class="needs-validation">
+        <p class="fs-3">Игра</p>
+        <div class="form-group">
+          <label for="player_1_name">Игрок 1</label>
+          <input name="player_1_name" class="form-control" id="player_1_name" value="{{player_1_name}}" disabled>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="player_1_score">Очки игрока {{ player_1_name }}</label>
+          <input name="player_1_score" class="form-control" id="player_1_score" value="{{player_1_score}}" disabled>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="player_2_name">Игрок 2</label>
+          <input name="player_2_name" class="form-control" id="player_2_name" value="{{player_2_name}}" disabled>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="player_2_score">Очки игрока {{ player_2_name }}</label>
+          <input name="player_2_score" class="form-control" id="player_2_score" value="{{player_2_score}}" disabled>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="questions_count">Количество вопросов</label>
+          <input type="number" name="questions_count" class="form-control" id="questions_count" value="{{questions_count}}" disabled>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="difficulty">Сложность вопросов</label>
+          <input type="number" name="difficulty" class="form-control" id="difficulty" value="{{difficulty}}" disabled>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="current_question">Текущий вопрос</label>
+          <input type="number" name="current_question" class="form-control" id="current_question" value="{{current_question}}" disabled>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="questions_past">Прошлые вопросы</label>
+          <input name="questions_past" class="form-control" id="questions_past" value="{{questions_past}}" disabled>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="created_at">Когда создана</label>
+          <input name="created_at" class="form-control" id="created_at" value="{{created_at}}" disabled>
+        </div>
+        <br>
+        <div class="form-group">
+          <label for="is_finished">Игра завершена</label>
+          <input name="is_finished" class="form-control" id="is_finished" value="{{is_finished}}" disabled>
+        </div>
+        <br>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
