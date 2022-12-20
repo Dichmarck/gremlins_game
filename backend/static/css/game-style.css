@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+
+body {
+	margin: 0;
+    font-family: 'Roboto';
+    color: #180C0C;
+    background-color: #fff;
+}
+
+.container {
+	display: flex;
+    flex-direction: column;
+	background-color: #dfdfdf;
+	width: 80%;
+	min-height: 90vh;
+	margin: 50px auto;
+}
+
+.wrapper
+{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.info {
+	display: flex;
+	justify-content: space-between;
+    
+    margin: 30px 0px;
+}
+
+.timer
+{
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    background-color: #3d3d3d;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 120px;
+
+    font-size: 36px;
+    color: #fff;
+}
+
+.userAnswer{
+    display: flex;
+    flex-direction: column;
+}
+
+.user {
+
+    background-color: #eeeceb;
+    width: 210px;
+    height: 150px;
+    border-radius: 20px;
+}
+
+.username
+{
+    text-align: center;
+    font-size: 24px;
+}
+
+.score
+{
+    text-align: center;
+    font-size: 24px;
+}
+
+#answerUser1, #answerUser2{
+    text-align: center;
+    font-size: 24px;
+    color: #3d3d3d;
+    background-color: #eeeceb;
+    padding: 5px 5px;
+    border-radius: 5px;
+    display: none;
+}
+
+.quiz-interface {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+}
+
+.question-number
+{
+    padding: 0px 30px;
+    background-color: #3d3d3d;
+    height: 60px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.question-block
+{
+    background-color: #3d3d3d;
+    width: 100%;
+    max-height: 600px;
+    border-radius: 20px;
+}
+
+.question-sub-block
+{
+    display: flex;
+    justify-content: center;
+}
+
+.question
+{
+    text-align: center;
+    font-size: 20px;
+    margin: 30px;
+    text-align: justify;
+}
+
+.answersGroup{
+    display: flex;
+    flex-direction: column;
+    margin: 0 40px;
+}
+
+.answers{
+    display: flex; 
+    justify-content:space-between;
+    margin: 10px auto;
+    margin-bottom: 30px;
+}
+
+.answer-no{
+    background-color: gray;
+    border-radius: 20px;
+    margin-top: 30px;
+    width: 300px;
+    height: 60px;
+    border: 0;
+    color: rgb(44, 43, 43);
+    font-size: 20px;
+
+}
+
+.answer-active
+{
+    background-color: #3d3d3d;
+    border-radius: 20px;
+    margin-top: 30px;
+    width: 300px;
+    height: 60px;
+    border: 0;
+
+    color: white;
+    font-size: 20px;
+    transition: .2s;
+}
+
+.answer-active:hover{
+    background-color: #fff;
+    border-color: #3d3d3d;
+    border: solid 4px;
+    color: #3d3d3d;
+    transform: scale(1.1);
+    font-weight: bold;
+}

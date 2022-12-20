@@ -1,68 +1,119 @@
-<html>
-<head>
-  <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
-  <link rel="icon" href="{{ url_for('static', path='/favicon.ico') }}" type="image/x-icon">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<!DOCTYPE html>
+<html lang="en">
 
-  <title>Веб-викторина</title>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="css/game-style.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<title>Document</title>
 </head>
+
 <body>
-  <div class="outer">
-    <div class="inner shadow p-3 rounded">
-      <form class="needs-validation">
-        <p class="fs-3">Игра</p>
-        <div class="form-group">
-          <label for="player_1_name">Игрок 1</label>
-          <input name="player_1_name" class="form-control" id="player_1_name" value="{{player_1_name}}" disabled>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="player_1_score">Очки игрока {{ player_1_name }}</label>
-          <input name="player_1_score" class="form-control" id="player_1_score" value="{{player_1_score}}" disabled>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="player_2_name">Игрок 2</label>
-          <input name="player_2_name" class="form-control" id="player_2_name" value="{{player_2_name}}" disabled>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="player_2_score">Очки игрока {{ player_2_name }}</label>
-          <input name="player_2_score" class="form-control" id="player_2_score" value="{{player_2_score}}" disabled>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="questions_count">Количество вопросов</label>
-          <input type="number" name="questions_count" class="form-control" id="questions_count" value="{{questions_count}}" disabled>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="difficulty">Сложность вопросов</label>
-          <input type="number" name="difficulty" class="form-control" id="difficulty" value="{{difficulty}}" disabled>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="current_question">Текущий вопрос</label>
-          <input type="number" name="current_question" class="form-control" id="current_question" value="{{current_question}}" disabled>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="questions_past">Прошлые вопросы</label>
-          <input name="questions_past" class="form-control" id="questions_past" value="{{questions_past}}" disabled>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="created_at">Когда создана</label>
-          <input name="created_at" class="form-control" id="created_at" value="{{created_at}}" disabled>
-        </div>
-        <br>
-        <div class="form-group">
-          <label for="is_finished">Игра завершена</label>
-          <input name="is_finished" class="form-control" id="is_finished" value="{{is_finished}}" disabled>
-        </div>
-        <br>
-      </form>
-    </div>
-  </div>
+	<div class="container">
+		<div class="wrapper">
+			<div class="info">
+				<div class="userAnswer">
+					<div class="user">
+						<p class="username">user1</p>
+						<p class="score">
+							Score: <br />
+							78
+						</p>
+					</div>
+					<p id="answerUser1">Отвечает</p>
+				</div>
+
+				<div class="timer" name="'timer" id="timer">0</div>
+
+				<div class="userAnswer">
+					<div class="user">
+						<p class="username">user2</p>
+						<p class="score">
+							Score: <br />
+							78
+						</p>
+					</div>
+					<p id="answerUser2">Отвечает</p>
+				</div>
+			</div>
+
+			<form class="quiz-interface" action="">
+				<div class="question-number">
+					<p>Вопрос номер</p>
+				</div>
+				<div class="question-block">
+					<div class="question-sub-block">
+						<p class="question">
+							шло 2 ежа, сколько? Lorem ipsum dolor sit amet
+							consectetur adipisicing elit. Deleniti autem
+							minima aliquam sunt aut soluta consequatur non.
+							Repellat culpa eligendi ea quo, reiciendis
+							necessitatibus, similique rerum, laborum
+							sapiente dicta quasi!
+						</p>
+					</div>
+				</div>
+				<div class="answers">
+					<div class="answersGroup">
+						<input class="answer-no" type="button" value="Ответ 1" />
+						<input class="answer-no" type="button" value="Ответ 1" />
+					</div>
+					<div class="answersGroup">
+						<input class="answer-no" type="button" value="Ответ 1" />
+						<input class="answer-no" type="button" value="Ответ 1" />
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+	<script>
+		let timer_answer = 1
+
+		function startTime() {
+			document.getElementById("timer").innerHTML = 10;
+		}
+		startTime();
+
+		async function buttonsBlock() {
+			let buttons = $('.answer-active')
+			for (let i = 0; i < buttons.length; i++) {
+				buttons[i].className = 'answer-no'
+				buttons[i].setAttribute('type', 'button')
+			}
+		}
+
+		async function buttonsActive() {
+			let buttons = $('.answer-no')
+			for (let i = 0; i < buttons.length; i++) {
+				buttons[i].className = 'answer-active'
+				buttons[i].setAttribute('type', 'submit')
+			}
+		}
+
+		setInterval(() => {
+			let time = parseInt(document.getElementById("timer").textContent) - 1;
+			document.getElementById("timer").innerHTML = time;
+
+
+			if (time == 0) {
+				document.getElementById("timer").innerHTML = 10;
+				if (timer_answer == 0) {
+					buttonsBlock();
+					timer_answer = 1
+					console.log(timer_answer + "question")
+				}
+				else {
+					buttonsActive();
+					timer_answer = 0
+					console.log(timer_answer + 'answer')
+				}
+			}
+		}, 1000);
+	</script>
 </body>
+
 </html>

@@ -71,17 +71,21 @@ async def change_player_score(uuid: str, player: int, scores_to_add: int, db: Se
         return db.query(Games).filter_by(uuid=uuid).one_or_none()
 
 
-
 @router.get("/")
 async def show_create_game_form(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
+
+
+@router.get("/rules")
+async def get_rules(request: Request):
+    return templates.TemplateResponse("rules.html", {"request": request})
 
 
 @router.get("/{uuid}")
 async def get_game_by_uuid(request: Request, uuid: str, db: Session = Depends(get_database_session)):
     game = db.query(Games).filter_by(uuid=uuid).one_or_none()
     if not game:
-        return templates.TemplateResponse("error.html", {"request": request, "error": f"Игра не найдена :("})
+        return templates.TemplateResponse("error_old.html", {"request": request, "error": f"Игра не найдена :("})
     else:
         context = {
             "request": request,
@@ -135,4 +139,6 @@ async def get_next_question_for_game(uuid: str, db: Session = Depends(get_databa
               "answer_3": random_question.answer_3, "answer_4": random_question.answer_4,
               "difficulty": random_question.difficulty}
     return result
+
+
 
