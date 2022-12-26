@@ -11,4 +11,5 @@ app.include_router(router)
 
 if __name__ == "__main__":
     # uvicorn main:app --port 80 --reload
+    # docker-compose -f docker-compose.yml up -d --build
     uvicorn.run(app, host="0.0.0.0", port=80)
