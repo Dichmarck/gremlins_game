@@ -2,7 +2,7 @@ import datetime
 import uuid
 from fastapi import Form, Request, Response, Depends, HTTPException, APIRouter, Body
 from fastapi.encoders import jsonable_encoder
-
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from schemas import StartGameSettings, ChangePlayerScore
 from sqlalchemy.orm import Session
 from fastapi import Depends
@@ -97,7 +97,7 @@ async def get_rules(request: Request):
 async def get_game_template(request: Request, uuid: str, db: Session = Depends(get_database_session)):
     game = db.query(Games).filter_by(uuid=uuid).one_or_none()
     if not game:
-        return templates.TemplateResponse("error_old.html", {"request": request, "error": f"Игра не найдена :("})
+        return templates.TemplateResponse("error.html", {"request": request, "error": f"Игра не найдена :("})
     context = {
         "request": request,
         "player_1_name": game.player_1_name,
@@ -112,7 +112,14 @@ async def get_game_template(request: Request, uuid: str, db: Session = Depends(g
         "is_finished": game.is_finished,
     }
 
+    print(context)
     if len(game.questions_past.split(' ')) > game.questions_count:
+        winner = None
+        if game.player_1_score > game.player_2_score:
+            winner = game.player_1_name
+        elif game.player_1_score < game.player_2_score:
+            winner = game.player_2_name
+        context['winner'] = winner
         return templates.TemplateResponse("game_end.html", context=context)
     else:
         return templates.TemplateResponse("game.html", context=context)
@@ -153,8 +160,28 @@ async def get_next_question_for_game(uuid: str, db: Session = Depends(get_databa
               "answer_3": random_question.answer_3, "answer_4": random_question.answer_4,
               "difficulty": random_question.difficulty, "questions_past": game.questions_past,
               'questions_count': game.questions_count}
-    print(result)
     return result
 
 
+async def not_found(request: Request, exc: StarletteHTTPException):
+    return templates.TemplateResponse("error.html", {"request": request,
+                                      "error": "Страница не найдена :("}, status_code=exc.status_code)
+
+
+async def method_not_allowed(request: Request, exc: StarletteHTTPException):
+    return templates.TemplateResponse("error.html", {"request": request,
+                                      "error": "Недопустимый метод :("}, status_code=exc.status_code)
+
+
+async def internal_server_error(request: Request, exc: StarletteHTTPException):
+    return templates.TemplateResponse("error.html", {"request": request,
+                                      "error": "Внутренняя ошибка сервера. Пожалуйста, попробуйте позже :("},
+                                      status_code=exc.status_code)
+
+
+custom_exception_handlers = {
+    404: not_found,
+    405: method_not_allowed,
+    500: internal_server_error,
+}
 

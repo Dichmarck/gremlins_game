@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    container_name: postgresql
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: root
+    volumes: 
+      - ./database/data:/var/lib/postgresql
+      
+  fastapi:
+    build: .
+    container_name: gremlins_game
+    restart: always
+    external_links:
+      - postgresql:postgresql
+    environment:
+      DATABASE_HOST: db
+      POSTGRES_PASSWORD: root
+    volumes:
+      - ./backend:/backend
+    ports:
+      - "80:80"
+    depends_on:
+      - "db"

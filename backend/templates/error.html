@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', path='/css/error.css') }}" />
+    <link rel="icon" href="{{ url_for('static', path='/favicon/4.ico') }}">
+    <title>Ошибка</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="errorBox">
+            <p class="error">Ошибка</p>
+        </div>
+
+        <p id="textError">{{ error }}</p>
+    </div>
+
+</body>
+
+</html>
