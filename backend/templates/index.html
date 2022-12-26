@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="{{ url_for('static', path='/css/style.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<link rel="icon" href="{{ url_for('static', path='/favicon/4.ico') }}">
+	<title>Создание игры</title>
 </head>
 
 <body>
@@ -19,18 +21,18 @@
             <div class="players">
                 <div class="player">
                     <p class="label-name">Игрок 1</p>
-                    <input type="text" name="player_1_name" id="player_1_name" placeholder="Имя Игрока 1" maxlength="20">
+                    <input type="text" name="player_1_name" id="player_1_name" placeholder="Имя Игрока 1" maxlength="20" required>
                 </div>
 
                 <div class="player">
                     <p class="label-name">Игрок 2</p>
-                    <input type="text" name="player_2_name" id="player_2_name" placeholder="Имя Игрока 2" maxlength="20">
+                    <input type="text" name="player_2_name" id="player_2_name" placeholder="Имя Игрока 2" maxlength="20" required>
                 </div>
             </div>
 
             <div class="difficulty">
                 <p class="label-difficulty">Сложность </p>
-                <select class="form-select" aria-label="Default select example" required id="difficulty" name="difficulty">
+                <select class="form-select" aria-label="Default select example" required id="difficulty" name="difficulty" required>
                     <option value="1">Низкая</option>
                     <option value="2" selected>Средняя</option>
                     <option value="3">Высокая</option>
@@ -39,7 +41,7 @@
 
             <div class="number-ques">
                 <p class="label-number-ques">Число вопроcов</p>
-                <input id="questions_count" type="number" name="questions_count" value="10" max="30" min="5">
+                <input id="questions_count" type="number" name="questions_count" value="10" max="30" min="5" required>
             </div>
 
             <a href="/rules">

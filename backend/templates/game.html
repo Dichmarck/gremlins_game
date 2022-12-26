@@ -5,9 +5,9 @@
 	<meta charset="UTF-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="stylesheet" href="css/game-style.css" />
+	<link rel="stylesheet" href="{{ url_for('static', path='/css/game-style.css') }}" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-	<title>Document</title>
+	<title>Веб-викторина</title>
 </head>
 
 <body>
@@ -16,11 +16,11 @@
 			<div class="info">
 				<div class="userAnswer">
 					<div class="user">
-						<p class="username">user1</p>
+						<p class="username" id="username1">{{ player_1_name }}</p>
 						<p class="score">
-							Score: <br />
-							78
+							Score:
 						</p>
+						<p class="score" id="score1">{{ player_1_score }}</p> 
 					</div>
 					<p id="answerUser1">Отвечает</p>
 				</div>
@@ -29,11 +29,11 @@
 
 				<div class="userAnswer">
 					<div class="user">
-						<p class="username">user2</p>
+						<p class="username" id="username2">{{ player_2_name }}</p>
 						<p class="score">
-							Score: <br />
-							78
+							Score:
 						</p>
+						<p class="score" id="score2">{{ player_2_score }}</p> 
 					</div>
 					<p id="answerUser2">Отвечает</p>
 				</div>
@@ -41,7 +41,7 @@
 
 			<form class="quiz-interface" action="">
 				<div class="question-number">
-					<p>Вопрос номер</p>
+					<p id="numberQuesNow">Вопрос номер</p>
 				</div>
 				<div class="question-block">
 					<div class="question-sub-block">
@@ -57,63 +57,52 @@
 				</div>
 				<div class="answers">
 					<div class="answersGroup">
-						<input class="answer-no" type="button" value="Ответ 1" />
-						<input class="answer-no" type="button" value="Ответ 1" />
+						<input class="answer-no" id="1" type="button" value="Ответ 1" />
+						<input class="answer-no" id="2" type="button" value="Ответ 1" />
 					</div>
 					<div class="answersGroup">
-						<input class="answer-no" type="button" value="Ответ 1" />
-						<input class="answer-no" type="button" value="Ответ 1" />
+						<input class="answer-no" id="3" type="button" value="Ответ 1" />
+						<input class="answer-no" id="4" type="button" value="Ответ 1" />
 					</div>
 				</div>
 
 			</form>
+			<button id="start_button">НАЧАТЬ</button>
 		</div>
 	</div>
-
+	
 	<script>
-		let timer_answer = 1
-
-		function startTime() {
-			document.getElementById("timer").innerHTML = 10;
-		}
-		startTime();
-
-		async function buttonsBlock() {
-			let buttons = $('.answer-active')
-			for (let i = 0; i < buttons.length; i++) {
-				buttons[i].className = 'answer-no'
-				buttons[i].setAttribute('type', 'button')
+		$('.answer-active').click(function(){
+			console.log('keyNow:');
+			console.log(keyNow);
+			if (keyNow == 0) {
+				return 0
 			}
-		}
-
-		async function buttonsActive() {
-			let buttons = $('.answer-no')
-			for (let i = 0; i < buttons.length; i++) {
-				buttons[i].className = 'answer-active'
-				buttons[i].setAttribute('type', 'submit')
+			
+			else{
+				$.ajax({
+					url: '/api/change_player_score',
+					method: 'post',
+					data: {uuid: uuid_now, player: (keyNow==13?2:1), scores_to_add: (rightAnswer == $(this).val()?1:-1)},
+					dataType: 'JSON',
+					success: $.ajax({
+						url: '/api/get_game',
+						method: 'get',
+						dataType: 'JSON',
+						data: {uuid: uuid_now},
+						success: function(data){
+							$('#score1').text(data.player_1_score)
+							$('#score2').text(data.player_2_score)
+						},
+						error: alert('Ошибка соединения с сервером')
+					})
+				})
 			}
-		}
-
-		setInterval(() => {
-			let time = parseInt(document.getElementById("timer").textContent) - 1;
-			document.getElementById("timer").innerHTML = time;
-
-
-			if (time == 0) {
-				document.getElementById("timer").innerHTML = 10;
-				if (timer_answer == 0) {
-					buttonsBlock();
-					timer_answer = 1
-					console.log(timer_answer + "question")
-				}
-				else {
-					buttonsActive();
-					timer_answer = 0
-					console.log(timer_answer + 'answer')
-				}
-			}
-		}, 1000);
+		})
 	</script>
+	
+	<script src="{{ url_for('static', path='/js/gameMain.js') }}"></script>
+	<script src="{{ url_for('static', path='/js/answers.js') }}"></script>
 </body>
 
 </html>

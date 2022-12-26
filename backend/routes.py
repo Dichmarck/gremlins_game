@@ -1,9 +1,9 @@
 import datetime
 import uuid
-from fastapi import Form, Request, Response, Depends, HTTPException, APIRouter
+from fastapi import Form, Request, Response, Depends, HTTPException, APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 
-from schemas import StartGameSettings
+from schemas import StartGameSettings, ChangePlayerScore
 from sqlalchemy.orm import Session
 from fastapi import Depends
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -51,7 +51,16 @@ async def get_question(difficulty: int, exclude: str = "", db: Session = Depends
 
 
 @router.post("/api/change_player_score")
-async def change_player_score(uuid: str, player: int, scores_to_add: int, db: Session = Depends(get_database_session)):
+async def change_player_score(request: Request, db: Session = Depends(get_database_session)):
+
+    request_body = await request.body()
+    reqeust_body_list = request_body.decode('utf8').split('&')
+
+    uuid = reqeust_body_list[0].split('=')[1]
+    player = int(reqeust_body_list[1].split('=')[1])
+    scores_to_add = int(reqeust_body_list[2].split('=')[1])
+    print(f"uuid: {uuid}, player: {player}, scores_to_add: {scores_to_add}")
+
     game = db.query(Games).filter_by(uuid=uuid).one_or_none()
     if not game:
         return {"Error": f"game with {uuid} not found"}
@@ -68,6 +77,9 @@ async def change_player_score(uuid: str, player: int, scores_to_add: int, db: Se
         else:
             return {"Error": f"player value should be 1 or 2"}
 
+        print("ОЧКИ ИЗМЕНЕНЫ:")
+        print(game)
+
         return db.query(Games).filter_by(uuid=uuid).one_or_none()
 
 
@@ -82,25 +94,27 @@ async def get_rules(request: Request):
 
 
 @router.get("/{uuid}")
-async def get_game_by_uuid(request: Request, uuid: str, db: Session = Depends(get_database_session)):
+async def get_game_template(request: Request, uuid: str, db: Session = Depends(get_database_session)):
     game = db.query(Games).filter_by(uuid=uuid).one_or_none()
     if not game:
         return templates.TemplateResponse("error_old.html", {"request": request, "error": f"Игра не найдена :("})
+    context = {
+        "request": request,
+        "player_1_name": game.player_1_name,
+        "player_1_score": game.player_1_score,
+        "player_2_name": game.player_2_name,
+        "player_2_score": game.player_2_score,
+        "questions_count": game.questions_count,
+        "difficulty": game.difficulty,
+        "current_question": game.current_question,
+        "questions_past": game.questions_past,
+        "created_at": game.created_at,
+        "is_finished": game.is_finished,
+    }
+
+    if len(game.questions_past.split(' ')) > game.questions_count:
+        return templates.TemplateResponse("game_end.html", context=context)
     else:
-        context = {
-            "request": request,
-            "player_1_name": game.player_1_name,
-            "player_1_score": game.player_1_score,
-            "player_2_name": game.player_2_name,
-            "player_2_score": game.player_2_score,
-            "questions_count": game.questions_count,
-            "difficulty": game.difficulty,
-            "current_question": game.current_question,
-            "questions_past": game.questions_past,
-            "created_at": game.created_at,
-            "is_finished": game.is_finished,
-        }
-        print(game.__dict__)
         return templates.TemplateResponse("game.html", context=context)
 
 
@@ -109,6 +123,7 @@ async def get_next_question_for_game(uuid: str, db: Session = Depends(get_databa
     """Функция по указанному uuid находит игру, получает из базы новый вопрос с нужной сложностью,
     меняет у игры текущий вопрос и прошлые вопросы и возвращает json полученного нового вопроса."""
     game = db.query(Games).filter_by(uuid=uuid).one_or_none()
+
     if not game:
         return {"Error": f"game with {uuid} not found"}
 
@@ -120,12 +135,11 @@ async def get_next_question_for_game(uuid: str, db: Session = Depends(get_databa
         except Exception:
             pass
 
-    if len(validated_exclude) >= game.questions_count - 1:
-        return {"Error": f"count of question for this game is exceeded"}
-
     questions = db.query(Questions).filter_by(difficulty=game.difficulty).\
         filter(Questions.id.not_in(validated_exclude)).all()
     random_question = random.choice(questions)
+
+    cur_questions_past = []
 
     if not game.current_question:
         game.current_question = random_question.id
@@ -137,7 +151,9 @@ async def get_next_question_for_game(uuid: str, db: Session = Depends(get_databa
     result = {"id": random_question.id, "question": random_question.question,
               "right_answer": random_question.right_answer, "answer_2": random_question.answer_2,
               "answer_3": random_question.answer_3, "answer_4": random_question.answer_4,
-              "difficulty": random_question.difficulty}
+              "difficulty": random_question.difficulty, "questions_past": game.questions_past,
+              'questions_count': game.questions_count}
+    print(result)
     return result
 
 

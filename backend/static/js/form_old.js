@@ -5,6 +5,16 @@ $('#form').submit(function (e) {
     let name1 = $('#player_1_name').val()
     let name2 = $('#player_2_name').val()
 
+    // if (name1 == '') {
+    //     alert('Введите имя Игрока 1 (букавками)')
+    //     p = 0
+
+    // }
+    // if (name2 == '') {
+    //     alert('Введите имя Игрока 2 (букавками)')
+    //     p = 0
+    // }
+
     if (name1 == name2 && name1 != '') {
         alert('Шиза, конечно, может быть у всех, но игра для двух разных людей, хомосапиенсов')
         p = 0
@@ -40,10 +50,13 @@ $('#form').submit(function (e) {
             window.location.href = '/' + data.uuid;
             localStorage.setItem({
                 'name1': name1,
-                'name2': name2,
-                'numQuestion': numberQues
+                'name2': name2
             })
 
+        },
+        error: function(xhr, status, error) {
+            alert("Ошибка соединения с сервером.");
         }
 	});
-})
+});
+

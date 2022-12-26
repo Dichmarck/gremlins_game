@@ -5,13 +5,13 @@ body {
 	margin: 0;
     font-family: 'Roboto';
     color: #180C0C;
-    background-color: #fff;
+    background-color: #c8c8c8;
 }
 
 .container {
 	display: flex;
     flex-direction: column;
-	background-color: #dfdfdf;
+	background-color: #252b35;
 	width: 80%;
 	min-height: 90vh;
 	margin: 50px auto;
@@ -35,7 +35,7 @@ body {
     border-radius: 50%;
     width: 120px;
     height: 120px;
-    background-color: #3d3d3d;
+    background-color: #ff6200;
     border-radius: 50%;
     text-align: center;
     line-height: 120px;
@@ -67,6 +67,7 @@ body {
 {
     text-align: center;
     font-size: 24px;
+    margin: 0 0;
 }
 
 #answerUser1, #answerUser2{
@@ -76,7 +77,7 @@ body {
     background-color: #eeeceb;
     padding: 5px 5px;
     border-radius: 5px;
-    display: none;
+    display:none;
 }
 
 .quiz-interface {
@@ -84,14 +85,15 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     color: white;
+
+    display: none;
 }
 
 .question-number
 {
     padding: 0px 30px;
-    background-color: #3d3d3d;
+    background-color: #e38203;
     height: 60px;
     border-radius: 20px;
     margin-bottom: 10px;
@@ -99,7 +101,7 @@ body {
 
 .question-block
 {
-    background-color: #3d3d3d;
+    background-color: #e38203;
     width: 100%;
     max-height: 600px;
     border-radius: 20px;
@@ -133,7 +135,8 @@ body {
 }
 
 .answer-no{
-    background-color: gray;
+    background-color: #fff;
+    color: #252b35;
     border-radius: 20px;
     margin-top: 30px;
     width: 300px;
@@ -146,23 +149,57 @@ body {
 
 .answer-active
 {
-    background-color: #3d3d3d;
+    background-color: #fff;
     border-radius: 20px;
     margin-top: 30px;
     width: 300px;
     height: 60px;
     border: 0;
 
-    color: white;
+    color: #252b35;
     font-size: 20px;
     transition: .2s;
 }
 
 .answer-active:hover{
     background-color: #fff;
-    border-color: #3d3d3d;
+    border-color: #252b35;
     border: solid 4px;
-    color: #3d3d3d;
+    color: #252b35;
     transform: scale(1.1);
     font-weight: bold;
+}
+.answer-active:active{
+    background-color: #fff;
+    border-color: #252b35;
+    border: solid 4px;
+    color: #252b35;
+    transform: scale(1.2);
+    font-weight: bold;
+}
+
+button{
+    background-color: #fff;
+    text-align: center;
+    font-size: 25px;
+    padding: 15px 15px;
+    border-radius: 10px;
+    border-color: #000000;
+    color: #000000;
+    cursor: pointer;
+    display: block;
+    margin: 20% auto;
+    transition: .2s;
+}
+
+button:hover{
+    background-color: #e38203;
+    color: #fff;
+    border-color: #e38203;
+}
+
+#winPlayer{
+    text-align: center;
+    font-size: 25px;
+    margin-top: 50px;
 }

@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=, initial-scale=1.0">
-    <link href="{{ url_for('static', path='/css/style.css') }}" rel="stylesheet">
-    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <title>Правила</title>
 </head>
 
 <body>
@@ -19,14 +19,14 @@
         <ol>
             <li>Время на прочетение вопроса 10 секунд;</li>
             <li>Если ответить хочет Игрок 1, то он нажимает пробел, если Игрок 2, то Enter;</li>
-            <li>Тот, ето решает ответить, имеет 10 секунд на ответ;</li>
+            <li>Тот, кто решает ответить, имеет 10 секунд на ответ;</li>
             <li>Если игрок не ответил, то право на ответ переходит второму игроку;</li>
             <li>За правильный ответ игрок получает 1 балл, за неправильный теряет 1 балл.</li>
         </ol>
        </div>
 
     <a href="/">
-        <img src="{{ url_for('static', path='/return.svg') }}" alt="">
+        <img src="{{ url_for('static', path='return.svg') }}" alt="Назад">
     </a>
 
     </div>

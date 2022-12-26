@@ -14,3 +14,8 @@ class GameSettings(StartGameSettings):
     uuid: str
     questions_past: str
 
+
+class ChangePlayerScore(BaseModel):
+    uuid: str
+    player: int
+    scores_to_add: int

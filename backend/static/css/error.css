@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+
+body {
+	margin: 0;
+    font-family: 'Roboto';
+    color: #180C0C;
+    background-color: #fff;
+}
+
+.container {
+	width: 80%;
+	margin: 50px auto;
+    background-color: #eeeceb;
+    min-height: 150px;
+    border-radius: 20px;
+}
+
+.errorBox{
+    padding: 10px 0;
+    text-align: center;
+}
+
+#textError{
+    text-align: left;
+    padding: 0 20px;
+    margin: 0;
+}
