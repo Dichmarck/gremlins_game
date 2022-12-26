@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="{{ url_for('static', path='/css/style.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<link rel="icon" href="{{ url_for('static', path='/favicon/4.ico') }}">
+	<title>Создание игры</title>
+</head>
+
+<body>
+    <form id="form">
+        <div class="container">
+            <div class="game-name">
+                <h1 class="title-name">Веб-викторина</h1>
+            </div>
+
+            <div class="players">
+                <div class="player">
+                    <p class="label-name">Игрок 1</p>
+                    <input type="text" name="player_1_name" id="player_1_name" placeholder="Имя Игрока 1" maxlength="15" required>
+                </div>
+
+                <div class="player">
+                    <p class="label-name">Игрок 2</p>
+                    <input type="text" name="player_2_name" id="player_2_name" placeholder="Имя Игрока 2" maxlength="15" required>
+                </div>
+            </div>
+
+            <div class="difficulty">
+                <p class="label-difficulty">Сложность </p>
+                <select class="form-select" aria-label="Default select example" required id="difficulty" name="difficulty" required>
+                    <option value="1">Низкая</option>
+                    <option value="2" selected>Средняя</option>
+                    <option value="3">Высокая</option>
+                  </select>
+            </div>
+
+            <div class="number-ques">
+                <p class="label-number-ques">Число вопроcов</p>
+                <input id="questions_count" type="number" name="questions_count" value="10" max="30" min="5" required>
+            </div>
+
+            <a href="/rules">
+                <img src="{{ url_for('static', path='/question.svg') }}" alt="Правила">
+            </a>
+
+            <div class="button">
+
+                <button type="submit">НАЧАТЬ ИГРУ</button>
+
+            </div>
+    </form>
+    </div>
+    <script src="{{ url_for('static', path='/js/form.js') }}"></script>
+</body>
+
+
+</html>

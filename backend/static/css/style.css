@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Roboto;
+}
+
+body{
+    background-color: #c8c8c8;
+}
+
+.container{
+    width: 60%;
+    height: 500px;
+    background-color: #252b35;
+    margin: 5% auto;
+    position: relative;
+    border-radius: 10px;
+}
+
+.game-name{
+    padding-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.title-name{
+    padding: 10px 10px;
+    color: #fff;
+    text-align: center;
+    background-color: #e38203;
+    width: 40%;
+    border-radius: 10px;
+}
+
+.players{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0;
+}
+
+.label-name, .label-difficulty, .label-number-ques{
+    text-align: center;
+    font-size: 25px;
+    color: #fff;
+    font-weight: bold;
+}
+
+#player_1_name, #player_2_name{
+    margin: 5px auto;
+    border: none;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.difficulty{
+    display: flex;
+    justify-content: space-around;
+    margin: 30px auto;
+    
+}
+
+select{
+    font-size: 20px;
+    border: none;
+    border-bottom: 1px solid;
+    background-color: #dfdfdf;
+    border-radius: 5px;
+}
+
+.number-ques{
+    display: flex;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+
+#questions_count{
+    border: none;
+    border-bottom: 1px solid;
+    text-align: center;
+    height: 30px;
+    font-size: 20px;
+    background-color: #dfdfdf;
+    border-radius: 5px;
+}
+
+button{
+    background-color: #dfdfdf;
+    text-align: center;
+    font-size: 25px;
+    padding: 15px 15px;
+    border-radius: 10px;
+    border-color: #000000;
+    color: #000000;
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover{
+    background-color: #e38203;
+    color: #ffffff;
+    border-color: #e38203;
+}
+
+.button{
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+img{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 15px 20px;
+    width: 5%;
+    cursor: pointer;
+    transition: .2s;
+}
+
+img:hover{
+    transform: scale(1.05);
+}
+
+/* rules */
+
+.rules{
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.title-rules{
+    padding: 10px 10px;
+    color: #fff;
+    text-align: center;
+    background-color: #e38203;
+    width: 40%;
+    border-radius: 10px;
+}
+
+.rules-text{
+    width: 60%;
+    margin: 30px auto;
+}
+
+ol{
+    color:#fff;
+    font-size: 25px;
+}
+
+li{
+    margin: 10px auto;
+}
+
+.authors{
+    width: 60%;
+    margin: 30px auto;
+}
+
+.authors li {
+    color:#fff;
+    font-size: 30px;
+}
+
+#button{
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}

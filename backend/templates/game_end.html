@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="{{ url_for('static', path='/css/game-style.css') }}" />
+	<link rel="icon" href="{{ url_for('static', path='/favicon/4.ico') }}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<title>Конец игры</title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="wrapper">
+			<div class="info">
+				<div class="userAnswer">
+					<div class="user">
+						<p class="username" id="username1">{{ player_1_name }}</p>
+						<p class="score">
+							Очки:
+						</p>
+						<p class="score" id="score1">{{ player_1_score }}</p>
+					</div>
+				</div>
+
+				<div class="timer" name="'timer" id="timer">:)</div>
+
+				<div class="userAnswer">
+					<div class="user">
+						<p class="username" id="username2">{{ player_2_name }}</p>
+						<p class="score">
+							Очки:
+						</p>
+						<p class="score" id="score1">{{ player_2_score }}</p>
+					</div>
+				</div>
+			</div>
+			{% if winner %}
+			<h1 id="winPlayer">Победил игрок <span style="color: #ff6200;">{{ winner }}</span></h1>		
+			{% else %}
+			<h1 id="winPlayer" style="color: #ff6200;">Ничья</h1>
+			{% endif %}			
+		</div>
+		<a href="/"><button id="start_button">НАЧАТЬ НОВУЮ ИГРУ</button></a>
+	</div>
+</body>
+
+</html>

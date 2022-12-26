@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/favicon/4.ico') }}">
+    <title>Правила</title>
+</head>
+
+<body>
+    <div class="container">
+       <div class="rules">
+        <h1 class="title-rules"> ПРАВИЛА ИГРЫ</h1>
+       </div>
+
+       <div class="rules-text">
+        <ol>
+            <li>Время на прочетение вопроса составляет 10 секунд;</li>
+            <li>Если ответить хочет Игрок 1, то он нажимает пробел, если же Игрок 2, то Enter;</li>
+            <li>Тот, кто решает ответить, имеет 10 секунд на ответ;</li>
+            <li>Если игрок ответил неправильно или не ответил вовсе, то право на ответ переходит второму игроку;</li>
+            <li>За правильный ответ игрок получает 1 балл, за неправильный - теряет 1 балл.</li>
+        </ol>
+       </div>
+
+    <a href="/">
+        <img src="{{ url_for('static', path='return.svg') }}" alt="Назад">
+    </a>
+
+    </div>
+    </div>
+</body>
+
+</html>

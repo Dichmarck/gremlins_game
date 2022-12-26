@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="{{ url_for('static', path='/css/game-style.css') }}" />
+	<link rel="icon" href="{{ url_for('static', path='/favicon/4.ico') }}">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<title>Веб-викторина</title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="wrapper">
+			<div class="info">
+				<div class="userAnswer">
+					<div class="user">
+						<p class="username" id="username1">{{ player_1_name }}</p>
+						<p class="score">
+							Очки:
+						</p>
+						<p class="score" id="score1">{{ player_1_score }}</p> 
+					</div>
+					<p id="answerUser1">Отвечает</p>
+				</div>
+
+				<div class="timer" name="'timer" id="timer">0</div>
+
+				<div class="userAnswer">
+					<div class="user">
+						<p class="username" id="username2">{{ player_2_name }}</p>
+						<p class="score">
+							Очки:
+						</p>
+						<p class="score" id="score2">{{ player_2_score }}</p> 
+					</div>
+					<p id="answerUser2">Отвечает</p>
+				</div>
+			</div>
+
+			<form class="quiz-interface" action="">
+				<div class="question-number">
+					<p id="numberQuesNow">Вопрос номер</p>
+				</div>
+				<div class="question-block">
+					<div class="question-sub-block">
+						<p class="question">
+							шло 2 ежа, сколько? Lorem ipsum dolor sit amet
+							consectetur adipisicing elit. Deleniti autem
+							minima aliquam sunt aut soluta consequatur non.
+							Repellat culpa eligendi ea quo, reiciendis
+							necessitatibus, similique rerum, laborum
+							sapiente dicta quasi!
+						</p>
+					</div>
+				</div>
+				<div class="answers">
+					<div class="answersGroup">
+						<input class="answer-no" id="1" type="button" value="Ответ 1" />
+						<input class="answer-no" id="2" type="button" value="Ответ 1" />
+					</div>
+					<div class="answersGroup">
+						<input class="answer-no" id="3" type="button" value="Ответ 1" />
+						<input class="answer-no" id="4" type="button" value="Ответ 1" />
+					</div>
+				</div>
+
+			</form>
+			<button id="start_button">НАЧАТЬ</button>
+		</div>
+	</div>
+	
+	<script>
+		$('.answer-active').click(function(){
+			console.log('keyNow:');
+			console.log(keyNow);
+			if (keyNow == 0) {
+				return 0
+			}
+			
+			else{
+				$.ajax({
+					url: '/api/change_player_score',
+					method: 'post',
+					data: {uuid: uuid_now, player: (keyNow==13?2:1), scores_to_add: (rightAnswer == $(this).val()?1:-1)},
+					dataType: 'JSON',
+					success: $.ajax({
+						url: '/api/get_game',
+						method: 'get',
+						dataType: 'JSON',
+						data: {uuid: uuid_now},
+						success: function(data){
+							$('#score1').text(data.player_1_score)
+							$('#score2').text(data.player_2_score)
+						},
+						error: alert('Ошибка соединения с сервером')
+					})
+				})
+			}
+		})
+	</script>
+	
+	<script src="{{ url_for('static', path='/js/gameMain.js') }}"></script>
+	<script src="{{ url_for('static', path='/js/answers.js') }}"></script>
+</body>
+
+</html>
