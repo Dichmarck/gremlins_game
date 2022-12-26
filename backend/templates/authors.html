@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', path='/favicon/4.ico') }}">
+    <title>Авторы</title>
+</head>
+
+<body>
+    <div class="container">
+       <div class="rules">
+        <h1 class="title-rules">АВТОРЫ ПРОЕКТА</h1>
+       </div>
+       <br>
+       <br>
+       <br>
+       <div class="authors">
+        <ul>
+            <li>Титова Виктория - FrontEnd</li>
+            <li>Гришанов Ярослав - FrontEnd</li>
+            <li>Оборовская Анна - Дизайнер, тестировщик</li>
+            <li>Буднов Данила - BackEnd</li>
+        </ul>
+       </div>
+
+    <a href="/">
+        <img src="{{ url_for('static', path='return.svg') }}" alt="Назад">
+    </a>
+
+    </div>
+    </div>
+</body>
+
+</html>

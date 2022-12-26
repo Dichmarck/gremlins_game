@@ -156,6 +156,16 @@ li{
     margin: 10px auto;
 }
 
+.authors{
+    width: 60%;
+    margin: 30px auto;
+}
+
+.authors li {
+    color:#fff;
+    font-size: 30px;
+}
+
 #button{
     height: 10%;
     display: flex;

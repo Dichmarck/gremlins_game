@@ -93,6 +93,11 @@ async def get_rules(request: Request):
     return templates.TemplateResponse("rules.html", {"request": request})
 
 
+@router.get("/authors")
+async def get_authors(request: Request):
+    return templates.TemplateResponse("authors.html", {"request": request})
+
+
 @router.get("/{uuid}")
 async def get_game_template(request: Request, uuid: str, db: Session = Depends(get_database_session)):
     game = db.query(Games).filter_by(uuid=uuid).one_or_none()
